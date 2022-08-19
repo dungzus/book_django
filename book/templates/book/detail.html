@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book</title>
+</head>
+<body>
+    {% if book %}
+    <h2>{{book.book_name}}</h2>
+    <h2>{{book.book_image}}</h2>
+    <h2>{{book.price}}$</h2>
+    <h2>{{book.description}}</h2>
+    <h2>{{book.date_published}}</h2>
+    {% else %}
+        <p>Book's id isn't available.</p>
+    {% endif %}
+</body>
+</html>

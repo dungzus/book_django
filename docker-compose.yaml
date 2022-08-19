@@ -1,0 +1,44 @@
+version: '3.7'
+# all the containers have to declare inside services
+services:
+  # App service
+  mysql:
+    image: mysql:latest
+    container_name: mysql_nest_chat
+    ports:
+      - 3306:3306
+    networks:
+      - nest-chat-network
+    volumes:
+      - mysql_storge:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    command: --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    environment:
+      MYSQL_DATABASE: book
+      MYSQL_USER: dung
+      MYSQL_PASSWORD: dung
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    hostname: mysql
+
+    # database manager
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mysql
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+    ports:
+      - 8080:80
+    networks:
+      - nest-chat-network
+  #Docker Networks
+networks:
+  # All container connect in a network
+  nest-chat-network:
+    driver: bridge
+# save (persist) data
+volumes:
+  mysql_storge: {}
